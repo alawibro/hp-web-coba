@@ -2,77 +2,70 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <!-- viewport-fit=cover lets the layout use the full screen on notched phones; safe-area insets are handled in CSS -->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Persona 3 Reload Pause Menu | Portfolio</title>
   <meta name="description" content="Pixel-perfect recreation of Persona 3 Reload's Pause Menu built with pure HTML, CSS, and JavaScript.">
   <link rel="shortcut icon" href="assets/favicon.png" type="image/x-icon">
   <meta name="theme-color" content="#001233">
-  <link rel="canonical" href="https://aiosssss.github.io/porto-persona3/">
+  <link rel="canonical" href="https://alawibro.github.io/hp-web-coba/">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preload" href="fonts/Rodin Pro EB.otf" as="font" type="font/otf" crossorigin>
+  <link rel="preload" href="fonts/Rodin Pro UB.otf" as="font" type="font/otf" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap" media="print" onload="this.media='all'">
   <noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&display=swap"></noscript>
-  <link rel="stylesheet" href="css/style.css?v=42">
+  <link rel="stylesheet" href="css/style.css?v=44">
 </head>
 <body>
+  <!-- Mobile / Small Screen Notification -->
+  <div class="mobile-warning">
+    <p>Sorry, this website is not supported for your device.</p>
+    <p>Try viewing this site on a computer!</p>
+  </div>
+
+
   <!-- Persona 3 Reload - Clean Sea Blue Loading Screen -->
-  <div id="loading-screen" class="p3r-loading-screen">
+  <div id="loading-screen" class="p3r-loading-screen" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
     <!-- Bottom-Right Loading HUD -->
     <div class="loading-hud-bottom">
       <div class="loading-text-row">
-        <p id="loading-title" class="loading-title" role="status">NOW LOADING<span class="loading-dots" aria-hidden="true"><span>.</span><span>.</span><span>.</span></span></p>
+        <h2 class="loading-title">NOW LOADING<span class="loading-dots"><span>.</span><span>.</span><span>.</span></span></h2>
       </div>
 
       <div class="loading-bar-wrap">
-        <div id="loading-track" class="loading-track" role="progressbar" aria-label="Loading" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100">
+        <div class="loading-track">
           <div id="loading-bar" class="loading-fill"></div>
         </div>
-        <div id="loading-percent" class="loading-percent" aria-hidden="true">0%</div>
+        <div id="loading-percent" class="loading-percent">0%</div>
       </div>
     </div>
   </div>
 
   <!-- Main Canvas -->
   <main class="p3r-main">
-    <h1 class="visually-hidden">Baihaqi Alawi: Portfolio</h1>
-
     <!-- Atmospheric Side Vignette: Subtle soft faded black on the sides across all pages -->
     <div class="p3r-global-vignette" aria-hidden="true"></div>
 
     <!-- Background Videos in Menu Utama: bg-intro then bg-loop -->
-    <!-- Video sources are chosen at runtime (js/main.js, "Media tier"): data-src = full quality
-         (desktop), data-src-lite = 720p30 for phones / Save-Data / slow networks.
-         The poster paints instantly and stays visible if the browser blocks autoplay. -->
     <video
       id="background-video-intro"
       class="background-video bg-video-intro"
-      data-src="assets/bg-intro.mp4"
-      data-src-lite="assets/lite/bg-intro.mp4"
-      poster="assets/poster-intro.jpg"
+      src="assets/bg-intro.mp4"
       muted
       playsinline
-      disablepictureinpicture
-      disableremoteplayback
-      preload="auto"
+      preload="metadata"
     ></video>
     <video
       id="background-video-loop"
       class="background-video bg-video-loop"
-      data-src="assets/bg-loop.mp4"
-      data-src-lite="assets/lite/bg-loop.mp4"
-      poster="assets/poster-loop.jpg"
+      src="assets/bg-loop.mp4"
       loop
       muted
       playsinline
-      disablepictureinpicture
-      disableremoteplayback
       preload="none"
     ></video>
 
     <!-- Side Watermark Number (01, 02, etc.) -->
-    <div id="side-number" class="side-number" aria-hidden="true">
+    <div id="side-number" class="side-number">
       <span>01</span>
     </div>
 
@@ -83,42 +76,40 @@
     </div>
 
     <!-- Menu Column: Options Stack -->
-    <nav id="menu-column" class="menu-column" aria-label="Main menu">
+    <div id="menu-column" class="menu-column">
+      <!-- Options Stack -->
       <div id="options-list" class="options-list">
         <!-- Options injected by main.js -->
       </div>
-    </nav>
+    </div>
 
     <!-- Bottom Right HUD & Controls -->
     <div class="hud-controls">
-      <!-- Shown instead of the keyboard keys on touch-only devices (see css section 6) -->
-      <div class="control-item hud-touch-hint" aria-hidden="true">
-        <span class="control-key">TAP</span>
-        <span class="control-text">Open</span>
-      </div>
       <div class="buttons-row">
         <div class="control-item">
-          <span class="control-key">ENTER</span>
+          <div class="control-key">ENTER</div>
           <span class="control-text">Confirm</span>
         </div>
         <div class="control-item">
-          <span class="control-key">ESC</span>
+          <div class="control-key">ESC</div>
           <span class="control-text">Close</span>
         </div>
       </div>
     </div>
   </main>
 
-  <!-- Fallback sound players: js/main.js plays through Web Audio and only uses these when it cannot -->
+  <!-- Preloaded Audio Elements for Instant Zero-Delay Playback -->
   <audio id="sfx-menu-utama-el" src="sfx/menu-utama.mp3" preload="none"></audio>
   <audio id="sfx-navigation-el" src="sfx/navigation.wav" preload="none"></audio>
   <audio id="sfx-close-menu-el" src="sfx/close-menu.mp3" preload="none"></audio>
 
   <!-- Persona 3 Reload - Social Link Style Project Screen -->
-  <section id="project-page" class="p3r-slink-screen" aria-label="Projects Social Link Screen" aria-hidden="true">
+  <section id="project-page" class="p3r-slink-screen" role="region" aria-label="Projects Social Link Screen" aria-hidden="true">
     <!-- Project Screen Animated Video Background (Makoto Wallpaper) -->
     <div class="slink-video-container" aria-hidden="true">
-      <video id="slink-bg-video" class="slink-bg-video" data-src="assets/skills-bg.mp4" data-src-lite="assets/lite/skills-bg.mp4" loop muted playsinline disablepictureinpicture disableremoteplayback preload="none"></video>
+      <video id="slink-bg-video" class="slink-bg-video" loop muted playsinline preload="none">
+        <source src="assets/skills-bg.mp4" type="video/mp4">
+      </video>
       <div class="slink-video-overlay" aria-hidden="true"></div>
     </div>
 
@@ -128,17 +119,17 @@
       <div class="slink-left-column">
         <!-- Profile Sub-header matching Atlus P3R Layout -->
         <div class="slink-profile-header" aria-hidden="true">
-          <div class="slink-profile-name">M.Baihaqi Alawi</div>
+          <div class="slink-profile-name">Baihaqi Alawi</div>
         </div>
 
         <!-- Persona 3 Reload Shattered Geometric Header Banner -->
-        <div class="p3r-geometric-header" id="project-header">
+        <div class="p3r-geometric-header" id="slink-project-div">
           <!-- Fractured Background Sky-Blue Band (Extending from left) -->
           <div class="p3r-shard-back-band" aria-hidden="true"></div>
           <!-- Main Dark Midnight Blue Razor-Cut Banner -->
           <div class="p3r-header-slash-main" aria-hidden="true"></div>
           <!-- Crisp Pure White Title -->
-          <h2 class="p3r-banner-title">PROJECT</h2>
+          <h1 class="p3r-banner-title" id="slink-project-text">PROJECT</h1>
         </div>
 
         <!-- Vertical Angled Cards Stack -->
@@ -147,15 +138,28 @@
         </div>
       </div>
 
+      <!-- Detail panel untuk project terpilih (diisi renderSlinkDetail di main.js) -->
+      <aside id="slink-detail" class="slink-detail" aria-live="polite" aria-label="Detail project">
+        <div class="slink-detail-inner">
+          <h3 class="slink-detail-title"></h3>
+          <p class="slink-detail-text"></p>
+          <div class="slink-detail-stack" hidden></div>
+          <div class="slink-detail-actions">
+            <a id="slink-demo-link" class="slink-detail-btn slink-detail-btn-primary" target="_blank" rel="noopener noreferrer"><span>Live Demo</span></a>
+            <a id="slink-repo-link" class="slink-detail-btn" target="_blank" rel="noopener noreferrer"><span>GitHub Repo</span></a>
+          </div>
+        </div>
+      </aside>
+
       <!-- Bottom Right HUD: Controls matching Menu Utama style (Guide removed) -->
       <div class="slink-bottom-hud">
         <div class="buttons-row">
           <button id="slink-confirm-btn" class="control-item slink-hud-btn" aria-label="Confirm Selection">
-            <span class="control-key">ENTER</span>
+            <div class="control-key">ENTER</div>
             <span class="control-text">Confirm</span>
           </button>
           <button id="slink-back-btn" class="control-item slink-hud-btn" aria-label="Back to Main Menu">
-            <span class="control-key">ESC</span>
+            <div class="control-key">ESC</div>
             <span class="control-text">Back</span>
           </button>
         </div>
@@ -167,10 +171,12 @@
        Persona 3 Reload - SKILLS STATS PAGE
        Dedicated Screen matching P3R Aesthetic with Stats Bars concept from P5
        ========================================================================== -->
-  <section id="skill-page" class="p3r-slink-screen p3r-skill-screen" aria-label="Skills Stats Screen" aria-hidden="true">
+  <section id="skill-page" class="p3r-slink-screen p3r-skill-screen" role="region" aria-label="Skills Stats Screen" aria-hidden="true">
     <!-- Video Background (Makoto Wallpaper) -->
     <div class="slink-video-container" aria-hidden="true">
-      <video id="skill-bg-video" class="slink-bg-video" data-src="assets/makoto-wallpaper.mp4" data-src-lite="assets/lite/makoto-wallpaper.mp4" loop muted playsinline disablepictureinpicture disableremoteplayback preload="none"></video>
+      <video id="skill-bg-video" class="slink-bg-video" loop muted playsinline preload="none">
+        <source src="assets/makoto-wallpaper.mp4" type="video/mp4">
+      </video>
       <div class="slink-video-overlay" aria-hidden="true"></div>
     </div>
 
@@ -184,13 +190,13 @@
         </div>
 
         <!-- Persona 3 Reload Shattered Geometric Header Banner for SKILLS -->
-        <div class="p3r-geometric-header" id="skill-header">
+        <div class="p3r-geometric-header" id="skill-header-div">
           <!-- Fractured Background Sky-Blue Band (Solid Light-Blue Shadow) -->
           <div class="p3r-shard-back-band" aria-hidden="true"></div>
           <!-- Main Dark Midnight Blue Razor-Cut Banner -->
           <div class="p3r-header-slash-main" aria-hidden="true"></div>
           <!-- Crisp Pure White Title -->
-          <h2 class="p3r-banner-title">SKILLS</h2>
+          <h1 class="p3r-banner-title" id="skill-header-text">SKILLS</h1>
         </div>
 
         <!-- Category Filter Tabs -->
@@ -199,7 +205,7 @@
         </div>
 
         <!-- Skills Stats Container -->
-        <div id="p3r-skills-container" class="p3r-skills-container" role="region" aria-label="Skill stats" tabindex="0">
+        <div id="p3r-skills-container" class="p3r-skills-container" role="region" aria-label="Skill Stats List">
           <!-- Dynamically populated by main.js with stats skill rows and animated meters -->
         </div>
       </div>
@@ -208,25 +214,25 @@
       <div class="slink-bottom-hud">
         <div class="buttons-row">
           <button id="skill-tab-prev-btn" class="control-item slink-hud-btn" aria-label="Previous Category">
-            <span class="control-key">
+            <div class="control-key">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="19" y1="12" x2="5" y2="12"></line>
                 <polyline points="12 19 5 12 12 5"></polyline>
               </svg>
-            </span>
+            </div>
             <span class="control-text">Prev</span>
           </button>
           <button id="skill-tab-next-btn" class="control-item slink-hud-btn" aria-label="Next Category">
-            <span class="control-key">
+            <div class="control-key">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
                 <line x1="5" y1="12" x2="19" y2="12"></line>
                 <polyline points="12 5 19 12 12 19"></polyline>
               </svg>
-            </span>
+            </div>
             <span class="control-text">Next</span>
           </button>
           <button id="skill-back-btn" class="control-item slink-hud-btn" aria-label="Close Skills Screen">
-            <span class="control-key">ESC</span>
+            <div class="control-key">ESC</div>
             <span class="control-text">Close</span>
           </button>
         </div>
@@ -238,10 +244,12 @@
        Persona 3 Reload - ABOUT ME PAGE
        Dedicated Screen: Left-docked Profile, Photo Frame Placeholder & Bio
        ========================================================================== -->
-  <section id="about-page" class="p3r-slink-screen p3r-about-screen" aria-label="About Screen" aria-hidden="true">
+  <section id="about-page" class="p3r-slink-screen p3r-about-screen" role="region" aria-label="About Screen" aria-hidden="true">
     <!-- Video Background (Makoto Wallpaper) -->
     <div class="slink-video-container" aria-hidden="true">
-      <video id="about-bg-video" class="slink-bg-video" data-src="assets/about-bg.mp4" data-src-lite="assets/lite/about-bg.mp4" loop muted playsinline disablepictureinpicture disableremoteplayback preload="none"></video>
+      <video id="about-bg-video" class="slink-bg-video" loop muted playsinline preload="none">
+        <source src="assets/about-bg.mp4" type="video/mp4">
+      </video>
       <div class="slink-video-overlay" aria-hidden="true"></div>
     </div>
 
@@ -255,40 +263,40 @@
         </div>
 
         <!-- Persona 3 Reload Shattered Geometric Header Banner for ABOUT -->
-        <div class="p3r-geometric-header" id="about-header">
+        <div class="p3r-geometric-header" id="about-header-div">
           <!-- Fractured Background Sky-Blue Band (Solid Light-Blue Shadow) -->
           <div class="p3r-shard-back-band" aria-hidden="true"></div>
           <!-- Main Dark Midnight Blue Razor-Cut Banner -->
           <div class="p3r-header-slash-main" aria-hidden="true"></div>
           <!-- Crisp Pure White Title -->
-          <h2 class="p3r-banner-title">ABOUT</h2>
+          <h1 class="p3r-banner-title" id="about-header-text">ABOUT</h1>
         </div>
 
         <!-- Left-Docked About Card (NOT full div, docked cleanly on the left side) -->
-        <div class="p3r-about-card" role="region" aria-label="About me" tabindex="0">
+        <div class="p3r-about-card" role="region" aria-label="About Profile Card">
           <div class="p3r-about-card-inner">
             
             <!-- Top Section: User Photo + Identity -->
             <div class="p3r-about-top-row">
               <!-- User Profile Photo -->
-              <div class="p3r-photo-box">
-                <img src="assets/profile.jpg" alt="Baihaqi Alawi" class="p3r-photo-img" width="360" height="360" loading="lazy" decoding="async" />
+              <div class="p3r-photo-box" aria-label="Profile Photo">
+                <img src="assets/profile.jpg" alt="Baihaqi Alawi" class="p3r-photo-img" />
               </div>
 
               <!-- Identity Details (Clean & Minimalist) -->
               <div class="p3r-about-identity">
-                <h3 class="p3r-about-name">Baihaqi Alawi</h3>
+                <h2 class="p3r-about-name">Baihaqi Alawi</h2>
                 <div class="p3r-about-title">Jaringan</div>
               </div>
             </div>
 
-            <!-- Bio Explanations in English (Frontend Design only, Persona 3 Reload inspired, zero dashes) -->
+            <!-- Bio -->
             <div class="p3r-about-bio">
-              <p class="p3r-about-p" lang="id">
-                Halo saya <strong>Baihaqi Alawi</strong>, Murid Sekolah <strong>SMK Raden Paku</strong> Saya Suka Exsperimen Dan Pecut Ai.
+              <p class="p3r-about-p">
+                Halo saya <strong>Baihaqi Alawi</strong>, murid <strong>SMK Raden Paku</strong>. Saya suka bereksperimen dan pecut AI.
               </p>
-              <p class="p3r-about-p" lang="id">
-                Saya Suka Main FF,Info Mabar <em>Minimal SGNYA OPM</em>.
+              <p class="p3r-about-p">
+                Saya suka main FF, info mabar <em>minimal SGNYA OPM</em>.
               </p>
             </div>
 
@@ -309,7 +317,7 @@
       <div class="slink-bottom-hud">
         <div class="buttons-row">
           <button id="about-back-btn" class="control-item slink-hud-btn" aria-label="Close About Screen">
-            <span class="control-key">ESC</span>
+            <div class="control-key">ESC</div>
             <span class="control-text">Close</span>
           </button>
         </div>
@@ -321,10 +329,12 @@
        Persona 3 Reload - CONTACT PAGE
        TODAY'S New Message / Phone Mail UI Style with Slanted Pad & Alerts
        ========================================================================== -->
-  <section id="contact-page" class="p3r-slink-screen p3r-contact-screen" aria-label="Contact Mail Screen" aria-hidden="true">
+  <section id="contact-page" class="p3r-slink-screen p3r-contact-screen" role="region" aria-label="Contact Mail Screen" aria-hidden="true">
     <!-- Video Background (Atmospheric Loop) -->
     <div class="slink-video-container" aria-hidden="true">
-      <video id="contact-bg-video" class="slink-bg-video" data-src="assets/contact-bg.mp4" data-src-lite="assets/lite/contact-bg.mp4" loop muted playsinline disablepictureinpicture disableremoteplayback preload="none"></video>
+      <video id="contact-bg-video" class="slink-bg-video" loop muted playsinline preload="none">
+        <source src="assets/contact-bg.mp4" type="video/mp4">
+      </video>
       <div class="slink-video-overlay p3r-contact-overlay" aria-hidden="true"></div>
     </div>
 
@@ -359,10 +369,10 @@
           </div>
 
           <!-- Messages / Contact Items List (Tanpa Tanda Seru) -->
-          <div class="p3r-mail-list-container" role="group" aria-label="Contact channels">
+          <div class="p3r-mail-list-container" role="list" aria-label="Contact Channels">
             
             <!-- Item 1: Gmail (Only Active Contact) -->
-            <a href="mailto:Em.Be.Alawi@gmail.com" class="p3r-mail-row active" data-idx="0">
+            <a href="mailto:Em.Be.Alawi@gmail.com" class="p3r-mail-row active" data-idx="0" role="listitem" aria-label="Email via Gmail">
               <div class="p3r-mail-icon-block p3r-mail-gmail" aria-hidden="true">
                 <svg viewBox="0 0 24 24" width="34" height="34" fill="currentColor">
                   <path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
@@ -438,7 +448,7 @@
       <div class="p3r-contact-bottom-hud">
         <div class="buttons-row">
           <button id="contact-back-btn" class="control-item slink-hud-btn" aria-label="Close Contact Screen">
-            <span class="control-key">ESC</span>
+            <div class="control-key">ESC</div>
             <span class="control-text">Close</span>
           </button>
         </div>
@@ -447,7 +457,7 @@
     </div>
   </section>
 
-  <noscript><p class="noscript-notice">This portfolio needs JavaScript to run.</p></noscript>
-  <script src="js/main.js?v=41" defer></script>
+
+  <script src="js/main.js?v=44" defer></script>
 </body>
 </html>
